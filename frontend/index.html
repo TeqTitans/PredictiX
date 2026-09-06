@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tech Titans — SIH 2026 | Cybercrime Predictive Analytics</title>
+
+    <!-- Leaflet.js -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Leaflet.heat plugin -->
+    <script src="https://unpkg.com/leaflet.heat@0.2.0/leaflet-heat.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+    <div class="app-layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h1>Tech Titans</h1>
+                    <span>SIH 2026</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-view="dashboard">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-view="hotspots">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <span>Hotspots</span>
+                </a>
+                <a href="#" class="nav-item" data-view="alerts">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    <span>Alerts</span>
+                </a>
+                <a href="#" class="nav-item" data-view="reports">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    <span>Reports</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span>System Online</span>
+                </div>
+                <div class="threat-level">
+                    <span class="threat-label">Threat Level</span>
+                    <span class="threat-value" id="threat-level">ELEVATED</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <!-- TOP BAR -->
+            <header class="topbar">
+                <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                </button>
+                <div class="topbar-title">
+                    <h2 id="page-title">Dashboard</h2>
+                    <span class="topbar-sub" id="page-sub">Real-time cybercrime predictive overview</span>
+                </div>
+                <div class="topbar-right">
+                    <div class="live-clock" id="live-clock">--:--:--</div>
+                    <div class="user-badge">
+                        <div class="user-avatar">TT</div>
+                        <span>Analyst</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- VIEW: DASHBOARD -->
+            <section class="view active" id="view-dashboard">
+                <!-- KPI CARDS -->
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-icon kpi-icon-blue">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        </div>
+                        <div class="kpi-body">
+                            <span class="kpi-label">Total Complaints</span>
+                            <span class="kpi-value" id="kpi-total">—</span>
+                            <span class="kpi-trend">All categories</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon kpi-icon-red">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        </div>
+                        <div class="kpi-body">
+                            <span class="kpi-label">High-Risk Alerts</span>
+                            <span class="kpi-value" id="kpi-high-risk">—</span>
+                            <span class="kpi-trend kpi-trend-danger">Critical priority</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon kpi-icon-cyan">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        </div>
+                        <div class="kpi-body">
+                            <span class="kpi-label">Predicted Withdrawals</span>
+                            <span class="kpi-value" id="kpi-predicted">—</span>
+                            <span class="kpi-trend">Interception targets</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon kpi-icon-green">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 12l4-4 4 4 6-6"/></svg>
+                        </div>
+                        <div class="kpi-body">
+                            <span class="kpi-label">Recovery Rate</span>
+                            <span class="kpi-value" id="kpi-recovery">—</span>
+                            <span class="kpi-trend kpi-trend-success">Funds recovered</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MAP + TREND CHART -->
+                <div class="dashboard-grid-2">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3>Active Hotspot Map</h3>
+                            <span class="panel-badge" id="hotspot-count">— zones</span>
+                        </div>
+                        <div id="map" class="map-container"></div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3>Complaint Trends — Last 7 Days</h3>
+                            <span class="panel-badge">Daily volume</span>
+                        </div>
+                        <div class="chart-wrap">
+                            <canvas id="trend-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RECENT ALERTS TABLE -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>Recent High-Risk Alerts</h3>
+                        <span class="panel-badge">Top 5</span>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Alert</th>
+                                    <th>Location</th>
+                                    <th>Risk</th>
+                                    <th>Probability</th>
+                                    <th>Time</th>
+                                    <th>Explainability</th>
+                                </tr>
+                            </thead>
+                            <tbody id="alerts-table-body">
+                                <tr><td colspan="7" class="loading-row">Loading alerts...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW: HOTSPOTS -->
+            <section class="view" id="view-hotspots">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>Geospatial Hotspot Analysis</h3>
+                        <span class="panel-badge" id="hotspot-count-2">— zones</span>
+                    </div>
+                    <div id="map-hotspots" class="map-container map-large"></div>
+                </div>
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>Active Hotspot Zones</h3>
+                        <span class="panel-badge">Ranked by intensity</span>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Zone</th>
+                                    <th>Coordinates</th>
+                                    <th>Intensity</th>
+                                    <th>Active Cases</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="hotspots-table-body">
+                                <tr><td colspan="5" class="loading-row">Loading hotspots...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW: ALERTS -->
+            <section class="view" id="view-alerts">
+                <div class="alert-filters">
+                    <button class="filter-btn active" data-filter="all">All Alerts</button>
+                    <button class="filter-btn" data-filter="High">High Risk</button>
+                    <button class="filter-btn" data-filter="Medium">Medium Risk</button>
+                </div>
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>All Predictive Alerts</h3>
+                        <span class="panel-badge" id="alert-total-count">— alerts</span>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Alert</th>
+                                    <th>Location</th>
+                                    <th>Risk</th>
+                                    <th>Probability</th>
+                                    <th>Time</th>
+                                    <th>Explainability</th>
+                                </tr>
+                            </thead>
+                            <tbody id="all-alerts-table-body">
+                                <tr><td colspan="7" class="loading-row">Loading alerts...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW: REPORTS -->
+            <section class="view" id="view-reports">
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-body">
+                            <span class="kpi-label">Total Complaints Logged</span>
+                            <span class="kpi-value" id="rpt-total">—</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-body">
+                            <span class="kpi-label">Cases Escalated</span>
+                            <span class="kpi-value" id="rpt-escalated">—</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-body">
+                            <span class="kpi-label">Cases Resolved</span>
+                            <span class="kpi-value" id="rpt-resolved">—</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-body">
+                            <span class="kpi-label">Avg. Complaint Amount</span>
+                            <span class="kpi-value" id="rpt-avg-amount">—</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="dashboard-grid-2">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3>Complaint Status Distribution</h3>
+                        </div>
+                        <div class="chart-wrap">
+                            <canvas id="status-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3>Complaint Types Breakdown</h3>
+                        </div>
+                        <div class="chart-wrap">
+                            <canvas id="type-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>Full Complaint Registry</h3>
+                        <span class="panel-badge" id="rpt-complaint-count">— records</span>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Victim</th>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                    <th>Location</th>
+                                    <th>Status</th>
+                                    <th>Timestamp</th>
+                                </tr>
+                            </thead>
+                            <tbody id="complaints-table-body">
+                                <tr><td colspan="7" class="loading-row">Loading complaints...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- SHAP MODAL -->
+    <div class="modal-overlay" id="shap-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>AI Explainability — Why This Alert Was Generated</h3>
+                <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body" id="shap-modal-body">
+                <p>Loading explanation...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
