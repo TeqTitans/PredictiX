@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tech Titans — SIH 2026 | Cybercrime Predictive Analytics</title>
+    <title>PredictiX — AI Cybercrime Predictive Analytics Platform </title>
 
     <!-- Leaflet.js -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -21,53 +22,69 @@
 
     <link rel="stylesheet" href="/static/styles.css" />
 </head>
+
 <body>
     <div class="app-layout">
-        <!-- SIDEBAR -->
+        <!-- SIDEBAR NAV -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="logo-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                        <path d="M9 12l2 2 4-4"/>
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        <circle cx="12" cy="11" r="3" />
                     </svg>
                 </div>
                 <div class="logo-text">
-                    <h1>Tech Titans</h1>
-                    <span>SIH 2026</span>
+                    <h1>PredictiX</h1>
+                    
                 </div>
             </div>
+
+            <!-- ROLE SELECTOR BADGE IN SIDEBAR -->
+            <div class="sidebar-role-box">
+                <label for="role-select">OPERATIONAL ROLE:</label>
+                <select id="role-select" class="role-select-dropdown">
+                    <option value="sho">👮‍♂️ SHO / Inspector (Command)</option>
+                    <option value="constable">📱 Police Constable (Mobile PCR)</option>
+                    <option value="bank">🏦 Bank Branch Manager</option>
+                    <option value="dcp">📊 DCP / SP District Command</option>
+                    <option value="i4c">🇮🇳 I4C National Intelligence</option>
+                    <option value="family">🛡️ Family Pre-Crime Guard</option>
+                </select>
+            </div>
+
             <nav class="sidebar-nav">
                 <a href="#" class="nav-item active" data-view="dashboard">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-                    <span>Dashboard</span>
+                    <span>Command Dashboard</span>
                 </a>
                 <a href="#" class="nav-item" data-view="hotspots">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                    <span>Hotspots</span>
+                    <span>ATM Hotspots</span>
                 </a>
                 <a href="#" class="nav-item" data-view="alerts">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                    <span>Alerts</span>
+                    <span>Live Intercept Alerts</span>
                 </a>
                 <a href="#" class="nav-item" data-view="reports">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                    <span>Reports</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    <span>Fraud Registry</span>
                 </a>
             </nav>
+
             <div class="sidebar-footer">
                 <div class="status-indicator">
                     <span class="status-dot"></span>
-                    <span>System Online</span>
+                    <span>AI Engine Online</span>
                 </div>
                 <div class="threat-level">
-                    <span class="threat-label">Threat Level</span>
-                    <span class="threat-value" id="threat-level">ELEVATED</span>
+                    <span class="threat-label">THREAT LEVEL</span>
+                    <span class="threat-value" id="threat-level">HIGH RISK</span>
                 </div>
             </div>
         </aside>
 
-        <!-- MAIN CONTENT -->
+        <!-- MAIN CONTENT AREA -->
         <main class="main-content">
             <!-- TOP BAR -->
             <header class="topbar">
@@ -75,60 +92,77 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
                 </button>
                 <div class="topbar-title">
-                    <h2 id="page-title">Dashboard</h2>
-                    <span class="topbar-sub" id="page-sub">Real-time cybercrime predictive overview</span>
+                    <h2 id="page-title">Command Dashboard</h2>
+                    <span class="topbar-sub" id="page-sub">Proactive Cybercrime Cash Withdrawal Forecasting</span>
                 </div>
+
+                <!-- TOPBAR ACTION BUTTONS -->
+                <div class="topbar-actions">
+                    <button class="btn-action btn-ingest" id="btn-open-ingest">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        + Report Fraud
+                    </button>
+                    <button class="btn-action btn-forecast" id="btn-trigger-forecast">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h5l3 9 4-18 3 9h5"/></svg>
+                        🔮 Forecast 24h
+                    </button>
+                    <button class="btn-action btn-retrain" id="btn-trigger-retrain">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                        🔄 Retrain ML
+                    </button>
+                </div>
+
                 <div class="topbar-right">
                     <div class="live-clock" id="live-clock">--:--:--</div>
-                    <div class="user-badge">
-                        <div class="user-avatar">TT</div>
-                        <span>Analyst</span>
+                    <div class="user-badge" id="current-role-badge">
+                        <div class="user-avatar">SHO</div>
+                        <span id="role-name-display">SHO Inspector</span>
                     </div>
                 </div>
             </header>
 
-            <!-- VIEW: DASHBOARD -->
+            <!-- VIEW 1: COMMAND DASHBOARD (SHO Perspective) -->
             <section class="view active" id="view-dashboard">
                 <!-- KPI CARDS -->
                 <div class="kpi-grid">
                     <div class="kpi-card">
                         <div class="kpi-icon kpi-icon-blue">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                         </div>
                         <div class="kpi-body">
-                            <span class="kpi-label">Total Complaints</span>
+                            <span class="kpi-label">Total 1930 Complaints</span>
                             <span class="kpi-value" id="kpi-total">—</span>
-                            <span class="kpi-trend">All categories</span>
+                            <span class="kpi-trend">Ingested real-time</span>
                         </div>
                     </div>
                     <div class="kpi-card">
                         <div class="kpi-icon kpi-icon-red">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
                         </div>
                         <div class="kpi-body">
-                            <span class="kpi-label">High-Risk Alerts</span>
+                            <span class="kpi-label">High-Risk Cashout Alerts</span>
                             <span class="kpi-value" id="kpi-high-risk">—</span>
-                            <span class="kpi-trend kpi-trend-danger">Critical priority</span>
+                            <span class="kpi-trend kpi-trend-danger">PCR units alerted</span>
                         </div>
                     </div>
                     <div class="kpi-card">
                         <div class="kpi-icon kpi-icon-cyan">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                         </div>
                         <div class="kpi-body">
-                            <span class="kpi-label">Predicted Withdrawals</span>
+                            <span class="kpi-label">Predicted ATM Cashouts</span>
                             <span class="kpi-value" id="kpi-predicted">—</span>
-                            <span class="kpi-trend">Interception targets</span>
+                            <span class="kpi-trend">Top 3 location targets</span>
                         </div>
                     </div>
                     <div class="kpi-card">
                         <div class="kpi-icon kpi-icon-green">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 12l4-4 4 4 6-6"/></svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                         </div>
                         <div class="kpi-body">
-                            <span class="kpi-label">Recovery Rate</span>
+                            <span class="kpi-label">Pre-Cashout Recovery Rate</span>
                             <span class="kpi-value" id="kpi-recovery">—</span>
-                            <span class="kpi-trend kpi-trend-success">Funds recovered</span>
+                            <span class="kpi-trend kpi-trend-success">Intercepted at ATM</span>
                         </div>
                     </div>
                 </div>
@@ -137,15 +171,15 @@
                 <div class="dashboard-grid-2">
                     <div class="panel">
                         <div class="panel-header">
-                            <h3>Active Hotspot Map</h3>
-                            <span class="panel-badge" id="hotspot-count">— zones</span>
+                            <h3>🗺️ Geospatial Withdrawal Hotspot Map</h3>
+                            <span class="panel-badge" id="hotspot-count">Loading map...</span>
                         </div>
                         <div id="map" class="map-container"></div>
                     </div>
                     <div class="panel">
                         <div class="panel-header">
-                            <h3>Complaint Trends — Last 7 Days</h3>
-                            <span class="panel-badge">Daily volume</span>
+                            <h3>📈 7-Day Fraud Trend & Cash-Out Interception</h3>
+                            <span class="panel-badge">Volume forecast</span>
                         </div>
                         <div class="chart-wrap">
                             <canvas id="trend-chart"></canvas>
@@ -156,26 +190,243 @@
                 <!-- RECENT ALERTS TABLE -->
                 <div class="panel">
                     <div class="panel-header">
-                        <h3>Recent High-Risk Alerts</h3>
-                        <span class="panel-badge">Top 5</span>
+                        <h3>🚨 Active Predictive Intercept Alerts</h3>
+                        <span class="panel-badge">Live Countdown Active</span>
                     </div>
                     <div class="table-wrap">
                         <table class="data-table">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Alert</th>
-                                    <th>Location</th>
-                                    <th>Risk</th>
+                                    <th>Alert ID</th>
+                                    <th>Incident & Type</th>
+                                    <th>Top 1 Predicted ATM</th>
+                                    <th>Risk Level</th>
                                     <th>Probability</th>
-                                    <th>Time</th>
-                                    <th>Explainability</th>
+                                    <th>Countdown</th>
+                                    <th>Dispatch SMS / Action</th>
                                 </tr>
                             </thead>
                             <tbody id="alerts-table-body">
-                                <tr><td colspan="7" class="loading-row">Loading alerts...</td></tr>
+                                <tr>
+                                    <td colspan="7" class="loading-row">Loading alerts from CashTrap AI engine...</td>
+                                </tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 2: POLICE CONSTABLE MOBILE APP PERSPECTIVE -->
+            <section class="view" id="view-constable">
+                <div class="constable-app-container">
+                    <div class="phone-frame">
+                        <div class="phone-header">
+                            <div class="phone-speaker"></div>
+                            <div class="phone-status-bar">
+                                <span>1930 POLICE PCR</span>
+                                <span>LIVE GPS 🟢</span>
+                            </div>
+                        </div>
+                        <div class="phone-body">
+                            <div class="constable-alert-card">
+                                <div class="constable-badge-header">
+                                    <span class="pulse-icon">🔴</span>
+                                    <span style="font-weight:700;color:var(--neon-red);">URGENT PCR DISPATCH</span>
+                                </div>
+                                <h3 id="constable-atm-name">SBI ATM, Andheri East, Mumbai</h3>
+                                <p class="constable-subtext" id="constable-alert-desc">Complaint #104 (OTP Fraud — ₹2,50,000). High risk of cash withdrawal.</p>
+                                
+                                <div class="countdown-banner">
+                                    <div class="timer-label">CASH-OUT WINDOW REMAINING:</div>
+                                    <div class="timer-value" id="constable-timer">14:32 MINS</div>
+                                </div>
+
+                                <div class="constable-gps-box">
+                                    <div class="gps-metric">
+                                        <span class="gps-label">DISTANCE</span>
+                                        <span class="gps-val">1.4 KM</span>
+                                    </div>
+                                    <div class="gps-metric">
+                                        <span class="gps-label">EST. ARRIVAL</span>
+                                        <span class="gps-val">4 MINS</span>
+                                    </div>
+                                    <div class="gps-metric">
+                                        <span class="gps-label">PCR UNIT</span>
+                                        <span class="gps-val">PCR-14</span>
+                                    </div>
+                                </div>
+
+                                <div class="constable-actions">
+                                    <button class="btn-pcr btn-enroute" id="btn-constable-enroute">🚗 Mark En Route</button>
+                                    <button class="btn-pcr btn-arrived" id="btn-constable-arrived">📍 Arrived at ATM</button>
+                                    <button class="btn-pcr btn-apprehend" id="btn-constable-apprehend">👮 Apprehend Mule</button>
+                                </div>
+                            </div>
+                            <div class="constable-recent-list">
+                                <h4>Recent Dispatches</h4>
+                                <div id="constable-dispatch-history">Loading history...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 3: BANK MANAGER PORTAL PERSPECTIVE -->
+            <section class="view" id="view-bank">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>🏦 Bank ATM Security & Cashout Prevention Portal</h3>
+                        <span class="panel-badge">RBI Banking Connect Active</span>
+                    </div>
+                    <p style="color:var(--text-muted);margin-bottom:15px;">
+                        CashTrap sends 15-minute advance warnings to bank branch managers to monitor ATM CCTV feeds and lock suspicious withdrawal transactions.
+                    </p>
+                    <div class="bank-grid">
+                        <div class="cctv-card">
+                            <div class="cctv-header">
+                                <span>CCTV STREAM — ATM #402 (ANDHERI EAST)</span>
+                                <span class="cctv-live">LIVE REC ●</span>
+                            </div>
+                            <div class="cctv-screen">
+                                <div class="cctv-overlay">
+                                    <div class="cctv-target-box">
+                                        <span>MULE DETECTED</span>
+                                        <span>CONFIDENCE: 91%</span>
+                                    </div>
+                                </div>
+                                <div class="cctv-noise"></div>
+                            </div>
+                            <div class="cctv-controls">
+                                <button class="btn-bank-action btn-freeze" id="btn-freeze-atm">🔒 Freeze ATM Cash Dispenser</button>
+                                <button class="btn-bank-action btn-hold" id="btn-hold-card">💳 Hold Card in Machine</button>
+                            </div>
+                        </div>
+
+                        <div class="panel">
+                            <h4>Monitored ATM Branches Near Alert Zones</h4>
+                            <div class="table-wrap">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>ATM Location</th>
+                                            <th>Alert Level</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bank-atm-table-body">
+                                        <tr><td colspan="4">Loading branch ATM status...</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 4: DCP / SP DISTRICT OVERVIEW PERSPECTIVE -->
+            <section class="view" id="view-dcp">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>📊 District Cyber Command Overview (DCP / SP Level)</h3>
+                        <span class="panel-badge">Resource Allocation</span>
+                    </div>
+                    <div class="kpi-grid">
+                        <div class="kpi-card">
+                            <div class="kpi-body">
+                                <span class="kpi-label">Active PCR Units Deployed</span>
+                                <span class="kpi-value" id="dcp-active-pcrs">14 PCRs</span>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-body">
+                                <span class="kpi-label">Avg. Interception Time</span>
+                                <span class="kpi-value" id="dcp-avg-time">14.2 Mins</span>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-body">
+                                <span class="kpi-label">Funds Recovered Today</span>
+                                <span class="kpi-value" id="dcp-funds-saved">₹ 18,40,000</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 style="margin-top:20px;margin-bottom:10px;">Police Station Response Performance</h4>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Police Station</th>
+                                    <th>Dispatches</th>
+                                    <th>Mules Apprehended</th>
+                                    <th>Success Rate</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dcp-station-table">
+                                <tr><td colspan="4">Loading district metrics...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 5: I4C NATIONAL INTELLIGENCE PERSPECTIVE -->
+            <section class="view" id="view-i4c">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>🇮🇳 I4C National Cybercrime Coordination Centre Dashboard</h3>
+                        <span class="panel-badge">National Fraud Migration Analysis</span>
+                    </div>
+                    <div class="dashboard-grid-2">
+                        <div class="panel">
+                            <h4>State-Wise Fraud Volumes</h4>
+                            <div class="table-wrap">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>State</th>
+                                            <th>Complaints</th>
+                                            <th>Amount (Lakhs)</th>
+                                            <th>Risk Index</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="i4c-state-table">
+                                        <tr><td colspan="4">Loading national state data...</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="panel">
+                            <h4>Cross-State Fraud Migration Corridors</h4>
+                            <div id="i4c-corridor-list">Loading corridors...</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 6: FAMILY MEMBER PRE-CRIME SHIELD PERSPECTIVE -->
+            <section class="view" id="view-family">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>🛡️ Voluntary Pre-Crime Protection (Elderly Relative Shield)</h3>
+                        <span class="panel-badge">Proactive Safeguard</span>
+                    </div>
+                    <p style="color:var(--text-muted);margin-bottom:20px;">
+                        Family members can voluntarily connect high-risk elderly relative bank accounts to receive real-time transaction verification prompts before money is debited.
+                    </p>
+                    <div class="family-card">
+                        <div class="family-header">
+                            <span class="pulse-icon">🟡</span>
+                            <span style="font-weight:700;color:var(--neon-yellow);">HIGH-VALUE TRANSACTION ALERT</span>
+                        </div>
+                        <h3>Ramesh Chawla (Father) — ₹ 1,50,000</h3>
+                        <p style="color:var(--text-secondary);">Target Account: Unknown UPI ID (suspected OTP scammer)</p>
+                        <div class="family-btn-row">
+                            <button class="btn-fam btn-approve" id="btn-fam-approve">✅ Approve Transaction</button>
+                            <button class="btn-fam btn-block" id="btn-fam-block">🛑 Block & Report to 1930</button>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -230,12 +481,12 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Alert</th>
+                                    <th>Alert Title</th>
                                     <th>Location</th>
                                     <th>Risk</th>
                                     <th>Probability</th>
-                                    <th>Time</th>
-                                    <th>Explainability</th>
+                                    <th>Dispatch Status</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="all-alerts-table-body">
@@ -249,47 +500,19 @@
             <!-- VIEW: REPORTS -->
             <section class="view" id="view-reports">
                 <div class="kpi-grid">
-                    <div class="kpi-card">
-                        <div class="kpi-body">
-                            <span class="kpi-label">Total Complaints Logged</span>
-                            <span class="kpi-value" id="rpt-total">—</span>
-                        </div>
-                    </div>
-                    <div class="kpi-card">
-                        <div class="kpi-body">
-                            <span class="kpi-label">Cases Escalated</span>
-                            <span class="kpi-value" id="rpt-escalated">—</span>
-                        </div>
-                    </div>
-                    <div class="kpi-card">
-                        <div class="kpi-body">
-                            <span class="kpi-label">Cases Resolved</span>
-                            <span class="kpi-value" id="rpt-resolved">—</span>
-                        </div>
-                    </div>
-                    <div class="kpi-card">
-                        <div class="kpi-body">
-                            <span class="kpi-label">Avg. Complaint Amount</span>
-                            <span class="kpi-value" id="rpt-avg-amount">—</span>
-                        </div>
-                    </div>
+                    <div class="kpi-card"><div class="kpi-body"><span class="kpi-label">Total Complaints</span><span class="kpi-value" id="rpt-total">—</span></div></div>
+                    <div class="kpi-card"><div class="kpi-body"><span class="kpi-label">Cases Escalated</span><span class="kpi-value" id="rpt-escalated">—</span></div></div>
+                    <div class="kpi-card"><div class="kpi-body"><span class="kpi-label">Cases Resolved</span><span class="kpi-value" id="rpt-resolved">—</span></div></div>
+                    <div class="kpi-card"><div class="kpi-body"><span class="kpi-label">Avg. Amount</span><span class="kpi-value" id="rpt-avg-amount">—</span></div></div>
                 </div>
                 <div class="dashboard-grid-2">
                     <div class="panel">
-                        <div class="panel-header">
-                            <h3>Complaint Status Distribution</h3>
-                        </div>
-                        <div class="chart-wrap">
-                            <canvas id="status-chart"></canvas>
-                        </div>
+                        <div class="panel-header"><h3>Status Distribution</h3></div>
+                        <div class="chart-wrap"><canvas id="status-chart"></canvas></div>
                     </div>
                     <div class="panel">
-                        <div class="panel-header">
-                            <h3>Complaint Types Breakdown</h3>
-                        </div>
-                        <div class="chart-wrap">
-                            <canvas id="type-chart"></canvas>
-                        </div>
+                        <div class="panel-header"><h3>Complaint Types</h3></div>
+                        <div class="chart-wrap"><canvas id="type-chart"></canvas></div>
                     </div>
                 </div>
                 <div class="panel">
@@ -303,11 +526,11 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Victim</th>
+                                    <th>Phone / Age</th>
                                     <th>Type</th>
                                     <th>Amount</th>
                                     <th>Location</th>
                                     <th>Status</th>
-                                    <th>Timestamp</th>
                                 </tr>
                             </thead>
                             <tbody id="complaints-table-body">
@@ -320,19 +543,98 @@
         </main>
     </div>
 
-    <!-- SHAP MODAL -->
-    <div class="modal-overlay" id="shap-modal">
+    <!-- MODAL 1: FILE NEW COMPLAINT MODAL -->
+    <div class="modal-overlay" id="ingest-modal">
         <div class="modal">
             <div class="modal-header">
-                <h3>AI Explainability — Why This Alert Was Generated</h3>
-                <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+                <h3>+ File New Cybercrime Complaint (1930 Real-Time Ingestion)</h3>
+                <button class="modal-close" id="ingest-modal-close">&times;</button>
             </div>
-            <div class="modal-body" id="shap-modal-body">
-                <p>Loading explanation...</p>
+            <div class="modal-body">
+                <form id="form-ingest-complaint">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Victim Name</label>
+                            <input type="text" id="inp-victim-name" required placeholder="e.g. Anjali Sharma" />
+                        </div>
+                        <div class="form-group">
+                            <label>Victim Phone Number</label>
+                            <input type="text" id="inp-victim-phone" required placeholder="+91 98765 43210" value="+91 98765 43210" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Amount Lost (₹)</label>
+                            <input type="number" id="inp-amount" required placeholder="e.g. 150000" value="150000" />
+                        </div>
+                        <div class="form-group">
+                            <label>Victim Age</label>
+                            <input type="number" id="inp-victim-age" required placeholder="45" value="45" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Fraud / Complaint Type</label>
+                            <select id="inp-complaint-type">
+                                <option value="UPI Fraud">UPI Fraud</option>
+                                <option value="OTP Fraud">OTP Fraud</option>
+                                <option value="Fake Loan App">Fake Loan App</option>
+                                <option value="Investment Scam">Investment Scam</option>
+                                <option value="Parcel Customs Scam">Parcel Customs Scam</option>
+                                <option value="Impersonation Scam">Impersonation Scam</option>
+                                <option value="Fake Customer Care">Fake Customer Care</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>City / Location</label>
+                            <select id="inp-location">
+                                <option value="Mumbai">Mumbai</option>
+                                <option value="Delhi">Delhi</option>
+                                <option value="Bengaluru">Bengaluru</option>
+                                <option value="Hyderabad">Hyderabad</option>
+                                <option value="Chennai">Chennai</option>
+                                <option value="Kolkata">Kolkata</option>
+                                <option value="Pune">Pune</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-submit-ingest">🚀 Run AI Prediction Engine</button>
+                </form>
+                <div id="ingest-result-container" style="display:none;margin-top:20px;"></div>
             </div>
         </div>
     </div>
 
+    <!-- MODAL 2: SHAP EXPLAINABILITY MODAL -->
+    <div class="modal-overlay" id="shap-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>🧠 AI Explainability — Why This Alert Was Flagged (SHAP Analysis)</h3>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <div class="modal-body" id="shap-modal-body">
+                <p>Loading SHAP explanation...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: DISPATCH SMS MODAL -->
+    <div class="modal-overlay" id="sms-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>📲 Instant Dispatch SMS Simulator</h3>
+                <button class="modal-close" id="sms-modal-close">&times;</button>
+            </div>
+            <div class="modal-body" id="sms-modal-body">
+                <p>Loading SMS preview...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div class="toast-container" id="toast-container"></div>
+
     <script src="/static/app.js"></script>
 </body>
+
 </html>
