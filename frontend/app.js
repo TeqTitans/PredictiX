@@ -204,7 +204,7 @@ async function initDashboardMap() {
         attributionControl: false,
     });
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(dashboardMap);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(dashboardMap);
 
     const heatPoints = hotspots.map(h => [h.latitude, h.longitude, h.intensity]);
     L.heatLayer(heatPoints, {
@@ -257,7 +257,7 @@ async function initHotspotMap() {
         center: [22.5, 80], zoom: 5, zoomControl: true, attributionControl: false
     });
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(hotspotMap);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(hotspotMap);
 
     const heatPoints = hotspots.map(h => [h.latitude, h.longitude, h.intensity]);
     L.heatLayer(heatPoints, {
@@ -313,25 +313,25 @@ async function loadTrendChart() {
                 {
                     label: 'Fraud Complaints',
                     data: complaintsData,
-                    borderColor: '#00e5ff',
-                    backgroundColor: 'rgba(0, 229, 255, 0.1)',
+                    borderColor: '#2563eb',
+                    backgroundColor: 'rgba(37, 99, 235, 0.08)',
                     borderWidth: 2.5, fill: true, tension: 0.4
                 },
                 {
                     label: 'Interception Recoveries',
                     data: resolvedData,
-                    borderColor: '#00ff9d',
-                    backgroundColor: 'rgba(0, 255, 157, 0.1)',
+                    borderColor: '#059669',
+                    backgroundColor: 'rgba(5, 150, 105, 0.08)',
                     borderWidth: 2.5, fill: true, tension: 0.4
                 }
             ]
         },
         options: {
             responsive: true, maintainAspectRatio: false,
-            plugins: { legend: { labels: { color: '#a0aec0' } } },
+            plugins: { legend: { labels: { color: '#334155', font: { weight: '600' } } } },
             scales: {
-                x: { grid: { color: '#1e293b' }, ticks: { color: '#64748b' } },
-                y: { grid: { color: '#1e293b' }, ticks: { color: '#64748b' }, beginAtZero: true }
+                x: { grid: { color: '#e2e8f0' }, ticks: { color: '#475569' } },
+                y: { grid: { color: '#e2e8f0' }, ticks: { color: '#475569' }, beginAtZero: true }
             }
         }
     });
