@@ -462,7 +462,7 @@ window.openSMSModal = function(alertId) {
     const body = document.getElementById('sms-modal-body');
 
     body.innerHTML = `
-        <div style="background:#09131d;border:1px solid var(--border-color);padding:15px;border-radius:8px;font-family:var(--font-mono);font-size:12px;color:var(--neon-cyan);margin-bottom:15px;">
+        <div style="background:#f1f5f9;border:1px solid #cbd5e1;padding:15px;border-radius:8px;font-family:var(--font-mono);font-size:12px;color:var(--text-primary);margin-bottom:15px;">
             🚨 CASHTRAP DISPATCH SMS ALERTS 🚨<br>
             TARGET: ${alert.predicted_location}<br>
             RISK: ${alert.risk_level.toUpperCase()} (${(alert.probability*100).toFixed(0)}% prob)<br>
@@ -531,7 +531,7 @@ document.getElementById('form-ingest-complaint').addEventListener('submit', asyn
         ).join('');
 
         container.innerHTML = `
-            <div style="background:#0d1829;border:1px solid var(--neon-cyan);padding:15px;border-radius:8px;">
+            <div style="background:#f8fafc;border:1px solid var(--neon-cyan);padding:15px;border-radius:8px;color:var(--text-primary);">
                 <h4 style="color:var(--neon-cyan);">AI Prediction Result:</h4>
                 <p><strong>Predicted Withdrawal ATM:</strong> ${res.prediction.predicted_location}</p>
                 <p><strong>Risk Level:</strong> <span class="risk-badge ${riskClass(res.prediction.risk_level)}">${res.prediction.risk_level} (${(res.prediction.probability*100).toFixed(0)}%)</span></p>
@@ -577,7 +577,7 @@ async function loadDCPMetrics() {
     const tbody = document.getElementById('dcp-station-table');
     tbody.innerHTML = data.station_performance.map(s => `
         <tr>
-            <td style="color:#fff;font-weight:600;">${s.station}</td>
+            <td style="color:var(--text-primary);font-weight:600;">${s.station}</td>
             <td>${s.dispatches}</td>
             <td style="color:var(--neon-green);font-weight:700;">${s.apprehended}</td>
             <td style="font-family:var(--font-mono);">${s.success_rate}</td>
@@ -592,7 +592,7 @@ async function loadI4CNationalData() {
     const tbody = document.getElementById('i4c-state-table');
     tbody.innerHTML = data.state_fraud_volumes.map(s => `
         <tr>
-            <td style="color:#fff;font-weight:600;">${s.state}</td>
+            <td style="color:var(--text-primary);font-weight:600;">${s.state}</td>
             <td>${s.complaints}</td>
             <td>₹ ${s.amount_lakhs} Lakhs</td>
             <td><span class="risk-badge risk-high">${s.risk_index}</span></td>
@@ -601,7 +601,7 @@ async function loadI4CNationalData() {
 
     const corridorBox = document.getElementById('i4c-corridor-list');
     corridorBox.innerHTML = data.migration_corridors.map(c => `
-        <div style="background:#0d1829;border:1px solid var(--border-color);padding:12px;border-radius:8px;margin-bottom:10px;">
+        <div style="background:#f8fafc;border:1px solid var(--border-color);padding:12px;border-radius:8px;margin-bottom:10px;">
             <div style="display:flex;justify-space-between;margin-bottom:4px;">
                 <strong style="color:var(--neon-cyan);">${c.corridor}</strong>
                 <span style="color:var(--neon-red);font-family:var(--font-mono);font-weight:700;">${c.surge}</span>
@@ -618,7 +618,7 @@ async function loadBankPortalData() {
     const tbody = document.getElementById('bank-atm-table-body');
     tbody.innerHTML = alerts.map(a => `
         <tr>
-            <td style="color:#fff;">${a.predicted_location}</td>
+            <td style="color:var(--text-primary);font-weight:600;">${a.predicted_location}</td>
             <td><span class="risk-badge ${riskClass(a.risk_level)}">${a.risk_level}</span></td>
             <td><span style="color:var(--neon-yellow);font-weight:600;">Under Watch (15m window)</span></td>
             <td><button class="btn-action btn-forecast" onclick="toggleFreezeATM('${a.predicted_location}')">🔒 Freeze ATM</button></td>
