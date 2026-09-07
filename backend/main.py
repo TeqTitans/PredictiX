@@ -52,3 +52,4 @@ async def root():
 # Mount static files for CSS/JS
 if os.path.isdir(FRONTEND_DIR):
     app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
+    app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
