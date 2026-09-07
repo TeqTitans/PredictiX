@@ -53,3 +53,8 @@ async def root():
 if os.path.isdir(FRONTEND_DIR):
     app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
     app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("backend.main:app", host="127.0.0.1", port=8000, reload=True)
+
